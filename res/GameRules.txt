@@ -1,0 +1,60 @@
+General Rules:
+
+Game Over when 19 atoms on the board.
+
+Game starts with 6 atoms,usually Hydrogen, Helium and Lithium.
+
+Minus Atom and Neutrino can’t be placed on the board as Plus and Dark Plus can.
+
+By using a Dark Plus, you can combine two Red Plus atoms to create a Beryllium atom.
+Score += 2
+
+
+Probabilities:
+
+First 3rd move is always a Minus atom (when you start a new game).
+
+Plus atom - every 6th move at worst case scenario.
+
+Minus atom - every 20th move, the placement of the transformed Minus Atom to Plus Atom on the board does not count.
+On fresh game, you get a Minus on the 3rd move and then on the 23rd.
+
+Neutrino - spawns with a chance 1/60 when the score is above 1500.
+
+Dark Plus - spawns with a chance 1/90 when the score is above 750.
+
+The baseValue of possible atoms at the centre increases every 45 moves.
+
+If you have atoms below baseValue in the circle they can still spawn with a chance of:
+(number of lower atoms on the board )/(number of all atoms on the board)* (1/3)
+
+It's not given in percent but how many moves it takes in average to spawn that atom,
+so the probabilities for a plus to spawn in a round is 1/6.
+
+The BaseValue is the lowest atom that can spawn and it's increased every 45 rounds.
+The RangeValue is the difference between lowest possible Atom and the highest possible one,
+which is 3 at the beginning. All atoms in this range have equal chances of being spawned.
+However, if there is an atom on the board with a value lower than the BaseValue it can also be spawned.
+
+The probability for lower atoms is:
+(number of lower atoms on the board )/(number of all atoms on the board)* (1/3)
+
+
+Score Calculation:
+
+Simple reaction: ( if r == 1 )
+Score = floor(1.5 * (Z + 1))
+
+Chain reaction:
+M = 1 + 0.5 * r             where r is the rth reaction
+Sr = floor(M * (Z + 1))
+B = 2 * M * (Zo - Z + 1)    where Zo is the outer atom value && Z is the middle atom
+
+score = Sr               if Zo < Z
+score = Sr + B           if Zo >= Z
+
+If a Dark Plus is used:
+Score = (Atom1Value + Atom2Value) / 2
+
+If there is a chain with >= 4 elements on a side:
+Creates an element with bonus value.  (Not yet implemented! - Phil)
